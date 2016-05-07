@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 for p in flease foundation pbrpcgen servers
 do

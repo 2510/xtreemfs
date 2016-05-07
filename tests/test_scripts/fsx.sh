@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 XTREEMFS_DIR=$1
 
 if [ ! -e ${XTREEMFS_DIR}/tests/utils/fsx.bin ]

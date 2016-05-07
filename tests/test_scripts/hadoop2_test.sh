@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 XTREEMFS=$1
 TEST_DIR=$4

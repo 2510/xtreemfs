@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # the timeout for one execution of xtfs_benchmark
 TIMEOUT=1500

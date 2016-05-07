@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 check_xtreemfs() {
     if [ -z "$XTREEMFS" ]; then

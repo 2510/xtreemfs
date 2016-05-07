@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 export XTREEMFS=$1
 echo "XTREEMFS=$XTREEMFS"

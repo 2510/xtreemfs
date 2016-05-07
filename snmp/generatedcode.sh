@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 JAVA=java
 if [ ! -z "${JAVA_HOME}" ]; then

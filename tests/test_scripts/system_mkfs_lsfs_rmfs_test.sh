@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 if [[ "$3" == pbrpcs://* || "$3" == pbrpcg://* ]]; then
   CREDS="--pkcs12-file-path $1/tests/certs/Client.p12 --pkcs12-passphrase passphrase"

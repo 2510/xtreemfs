@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # test getfattr -d
 COMMAND="getfattr -d -m x ."

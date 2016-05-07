@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 # this scripts uses the tool 'uuidgen'
 
 CFGFILE=$1 #name of the config file (osdconfig, mrcconfig)

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 #
 # Copyright 2008, Google Inc.
 # All rights reserved.

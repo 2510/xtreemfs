@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # runs all JUnit tests in the subpackage 'org.xtreemfs.test' that end with '*Test.java'
 

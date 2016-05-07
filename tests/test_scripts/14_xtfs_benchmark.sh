@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # run a series of benchmarks with the xtfs_benchmark tools on the test setup
 

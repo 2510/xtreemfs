@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 # a simple wrapper around fusermount -u, now passes all args to fusermount
 
 if [ "x$1" == "x" -o "$1" == "--help" -o "$1" == "-h" ]

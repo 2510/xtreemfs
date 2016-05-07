@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # Copyright (c) 2013 by Michael Berlin, Zuse Institute Berlin
 #

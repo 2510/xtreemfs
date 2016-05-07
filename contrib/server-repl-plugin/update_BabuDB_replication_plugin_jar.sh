@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # Copyright (c) 2012 Michael Berlin, Zuse Institute Berlin
 # Licensed under the BSD License, see LICENSE file for details.

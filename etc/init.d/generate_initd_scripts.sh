@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/usr/local/bin/bash -e
 
 # This script generates the /etc/init.d/xtreemfs-{dir,mrc,osd} scripts
 # based on the file 'xtreemfs-service.template'.
