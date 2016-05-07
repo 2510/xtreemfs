@@ -5,9 +5,9 @@ else
 endif
 
 ifeq "$(ANT_HOME)" ""
-        ANT_BIN = /usr/bin/ant
+        ANT_BIN := /usr/bin/ant
 else
-        ANT_BIN = $(ANT_HOME)/bin/ant
+        ANT_BIN := $(ANT_HOME)/bin/ant
 endif
 
 ifeq "$(CMAKE_HOME)" ""
@@ -19,6 +19,7 @@ endif
 SHELL := $(shell which bash)
 WHICH_GPP = $(shell which g++)
 WHICH_CLANGPP = $(shell which clang++)
+PYTHON := python
 
 ifeq "$(shell uname)" "SunOS"
   PROTOBUF_DISABLE_64_BIT_SOLARIS = "--disable-64bit-solaris"
@@ -190,13 +191,14 @@ check_server:
 	@echo "ant ok"
 
 check_client:
-	@if [ ! $(WHICH_GPP) -a ! $(WHICH_CLANGPP) ]; then echo "C++ compiler not found";exit 1; fi;
-	@if [ ! $(CMAKE_BIN) ]; then echo "cmake not found";exit 1; fi;
+	@if [ ! -x "$(WHICH_GPP)" -a ! -x "$(WHICH_CLANGPP)" ]; then echo "C++ compiler not found";exit 1; fi;
+	@if [ -z "$(shell $(CMAKE_BIN) --version 2>/dev/null)" ]; then echo "cmake not found";exit 1; fi;
 	@echo "C++ ok"
 
 
 check_test:
-	@if [[ $(shell python -V 2>&1 | head -n1 | cut -d" " -f2 | cut -d. -f2) -lt 3 && $(shell python -V 2>&1 | head -n1 | cut -d" " -f2 | cut -d. -f1) -lt 3 ]]; then echo "python >= 2.4 required!"; exit 1; fi;
+	@if [ -z "$(shell which $(PYTHON) 2>/dev/null)" ]; then echo "python >= 2.4 required! (not installed)"; exit 1; fi;
+	@if [ "$(shell $(PYTHON) -V 2>&1 | head -n1 | cut -d' ' -f2 | cut -d. -f2)" -lt 3 -a "$(shell $(PYTHON) -V 2>&1 | head -n1 | cut -d' ' -f2 | cut -d. -f1)" -lt 3 ]; then echo "python >= 2.4 required! (version error)"; exit 1; fi;
 	@echo "python ok"
 
 set_version:
@@ -337,7 +339,7 @@ hadoop-client_distclean:
 	$(ANT_BIN) -D"file.encoding=UTF-8" -f contrib/hadoop/build.xml clean || exit 1
 
 test: check_test client server
-	python ./tests/xtestenv -c ./tests/test_config.py short
+	$(PYTHON) ./tests/xtestenv -c ./tests/test_config.py short
 
 pbrpcgen:
 	$(ANT_BIN) -D"file.encoding=UTF-8" -f java/pbrpcgen/build.xml
