@@ -1,45 +1,36 @@
-#!/usr/local/bin/bash
+#!/bin/sh
 
-### BEGIN INIT INFO
-# Provides:          xtreemfs-@SHORT_SERVICE_NAME_LOWERCASE@
-# Required-Start:    $network $remote_fs
-# Required-Stop:     $network $remote_fs
-# Should-Start:      @SHOULD_START@
-# Should-Stop:       $null
-# Default-Start:     3 5
-# Default-Stop:      0 1 2 6
-# Short-Description: XtreemFS @SHORT_SERVICE_NAME@
-# Description:       XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@). http://www.xtreemfs.org/
-### END INIT INFO
+# XtreemFS @SHORT_SERVICE_NAME@
+#
+# XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@). http://www.xtreemfs.org/
 
-# Source function library.
-if [ -e /lib/lsb/init-functions ]; then
-    . /lib/lsb/init-functions
-else
-    . /etc/init.d/functions
-fi
+# PROVIDE: xstreemfs-@SHORT_SERVICE_NAME_LOWERCASE@
+# REQUIRE: NETWORKING cleanvar
+
+. /etc/rc.subr
+
+name="xstreemfs-@SHORT_SERVICE_NAME_LOWERCASE@"
+rcvar="xstreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable"
+
+extra_commands="restart"
+start_precmd='xtreemfs_precheck'
+start_cmd="xtreemfs_start"
+stop_cmd="xtreemfs_stop"
+restart_cmd="xtreemfs_restart"
+status_cmd="xtreemfs_status"
+required_modules="fuse"
+
+xstreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable=${xstreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable:-"NO"}
 
 XTREEMFS_USER=xtreemfs
-
 PID=/var/run/xtreemfs_@SHORT_SERVICE_NAME_LOWERCASE@.pid
-
-CONFIG=/etc/xos/xtreemfs/@SHORT_SERVICE_NAME_LOWERCASE@config.properties
-
+CONFIG=/usr/local/etc/xos/xtreemfs/@SHORT_SERVICE_NAME_LOWERCASE@config.properties
 LOG=/var/log/xtreemfs/@SHORT_SERVICE_NAME_LOWERCASE@.log
 
-if [ -z $JAVA_HOME ]; then
-    export JAVA_HOME=/usr
-fi
+JAVA_HOME=/usr/local/openjdk8
 JAVA_CALL="$JAVA_HOME/bin/java -ea -cp /usr/share/java/XtreemFS.jar:/usr/share/java/BabuDB.jar:/usr/share/java/Flease.jar:/usr/share/java/protobuf-java-2.5.0.jar:/usr/share/java/Foundation.jar:/usr/share/java/jdmkrt.jar:/usr/share/java/jdmktk.jar:/usr/share/java/commons-codec-1.3.jar"
 
-# For SELinux we need to use 'runuser' not 'su'
-if [ -x "/sbin/runuser" ]; then
-    SU="/sbin/runuser"
-else
-    SU="/bin/su"
-fi
-
-pre_check() {
+xtreemfs_precheck() {
     exists=`grep -c $XTREEMFS_USER /etc/passwd`
     if [ $exists -eq 0 ]; then
         echo "User $XTREEMFS_USER does not exist. Create it first."
@@ -52,10 +43,9 @@ pre_check() {
     fi
 }
 
-start() {
+xtreemfs_start() {
     if [ -f $PID ]; then
-        PROCPID=`cat $PID`
-        if [ -e /proc/$PROCPID ];then
+	if pgrep -F $PID $SU >/dev/null 2>&1; then
             echo "XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@) already started"
             return 0
         else
@@ -63,17 +53,19 @@ start() {
         fi
     fi
 
-    pre_check
+    xtreemfs_precheck
+
+    load_kld fuse
+    touch $LOG
+    chown $XTREEMFS_USER $LOG
 
     echo >> $LOG
     date >> $LOG
     echo -e "Starting XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@)...\n\n" >> $LOG
 
     echo -n "Starting XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@)..."
-    $SU -s /bin/bash $XTREEMFS_USER -c "$JAVA_CALL org.xtreemfs.@SHORT_SERVICE_NAME_LOWERCASE@.@SHORT_SERVICE_NAME@ $CONFIG" >> $LOG 2>&1 &
-    PROCPID=$!
-    echo $PROCPID > $PID
-    sleep 1s
+    /usr/sbin/daemon -u $XTREEMFS_USER -P $PID sh -c "$JAVA_CALL org.xtreemfs.@SHORT_SERVICE_NAME_LOWERCASE@.@SHORT_SERVICE_NAME@ $CONFIG >> $LOG 2>&1"
+    sleep 1
 
     if [ -e /proc/$PROCPID ]; then
         echo "success"
@@ -85,11 +77,11 @@ start() {
     return 0
 }
 
-stop() {
+xtreemfs_stop() {
     result=0
     if [ -f $PID ]; then
         echo -n "Stopping XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@)..."
-        killproc -p $PID $SU
+        pkill -F $PID -f daemon
         result=$?
         if [ $result -eq 0 ]; then
             rm -f $PID
@@ -104,7 +96,11 @@ stop() {
     return $result
 }
 
-status() {
+xtreemfs_restart() {
+    xtreemfs_stop && sleep 1 && xtreemfs_start
+}
+
+xtreemfs_status() {
     if [ -f $PID ]; then
         PROCPID=`cat $PID`
         if [ ! -e /proc/$PROCPID ]; then
@@ -120,42 +116,5 @@ status() {
     fi
 }
 
-# See how we were called.
-case "$1" in
-    start)
-        start
-        result=$?
-        ;;
-    stop)
-        stop
-        result=$?
-        ;;
-    status)
-        status
-        result=$?
-        ;;
-    reload)
-        result=0
-        ;;
-    restart)
-        stop && sleep 1 && start
-        result=$?
-        ;;
-    try-restart)
-        ## Stop the service and if this succeeds (i.e. the
-        ## service was running before), start it again.
-        $0 status >/dev/null
-        if [ $? -eq 0 ]; then
-          $0 restart
-          result=$?
-        else
-          result=0
-        fi
-        ;;
-    *)
-        echo -e "Usage: $0 {start|stop|restart|reload|status|try-restart}\n"
-        result=1
-        ;;
-esac
-
-exit $result
+load_rc_config $name
+run_rc_command "$1"

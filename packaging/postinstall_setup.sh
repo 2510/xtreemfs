@@ -3,7 +3,7 @@ set -e
 
 XTREEMFS_LOG_DIR=/var/log/xtreemfs
 XTREEMFS_HOME=/var/lib/xtreemfs
-XTREEMFS_ETC=/etc/xos/xtreemfs
+XTREEMFS_ETC=/usr/local/etc/xos/xtreemfs
 XTREEMFS_USER=xtreemfs
 XTREEMFS_GROUP=xtreemfs
 XTREEMFS_GENERATE_UUID_SCRIPT="${XTREEMFS_ETC}/generate_uuid"

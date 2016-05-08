@@ -20,6 +20,7 @@ SHELL := $(shell which bash)
 WHICH_GPP = $(shell which g++)
 WHICH_CLANGPP = $(shell which clang++)
 PYTHON := python
+DESTDIR := /usr/local
 
 ifeq "$(shell uname)" "SunOS"
   PROTOBUF_DISABLE_64_BIT_SOLARIS = "--disable-64bit-solaris"
@@ -33,7 +34,7 @@ XTREEMFS_BINARIES_DIR = $(shell pwd)/bin
 XTREEMFS_JAR_DIR=$(DESTDIR)/usr/share/java
 XTREEMFS_CONFIG_PARENT_DIR=$(DESTDIR)/etc/xos
 XTREEMFS_CONFIG_DIR=$(XTREEMFS_CONFIG_PARENT_DIR)/xtreemfs
-XTREEMFS_INIT_DIR=$(DESTDIR)/etc/init.d
+XTREEMFS_RC_DIR=$(DESTDIR)/etc/rc.d
 XTREEMFS_SHARE_DIR=$(DESTDIR)/usr/share/xtreemfs
 BIN_DIR=$(DESTDIR)/usr/bin
 SBIN_DIR=$(DESTDIR)/sbin
@@ -120,9 +121,9 @@ install-server:
 
 # Generating init.d scripts based on template.
 	@etc/init.d/generate_initd_scripts.sh
-	@mkdir -p $(XTREEMFS_INIT_DIR)
-	@cp etc/init.d/xtreemfs-{dir,mrc,osd} $(XTREEMFS_INIT_DIR)
-	@chmod a+x $(XTREEMFS_INIT_DIR)/xtreemfs-*
+	@mkdir -p $(XTREEMFS_RC_DIR)
+	@cp etc/init.d/xtreemfs-{dir,mrc,osd} $(XTREEMFS_RC_DIR)
+	@chmod a+x $(XTREEMFS_RC_DIR)/xtreemfs-*
 
 	@mkdir -p $(XTREEMFS_SHARE_DIR)
 	@cp contrib/xtreemfs-osd-farm/xtreemfs-osd-farm $(XTREEMFS_SHARE_DIR)
@@ -170,7 +171,7 @@ uninstall:
 	@rm -f $(XTREEMFS_JAR_DIR)/protobuf-java-2.5.0.jar
 	@rm -f $(XTREEMFS_JAR_DIR)/BabuDB_replication_plugin.jar
 
-	@rm -f $(XTREEMFS_INIT_DIR)/xtreemfs-*
+	@rm -f $(XTREEMFS_RC_DIR)/xtreemfs-*
 
 	@rm -rf $(MAN_DIR)/xtfs*
 	@rm -rf $(MAN_DIR)/*.xtreemfs*
