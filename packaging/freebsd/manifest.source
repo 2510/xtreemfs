@@ -1,0 +1,15 @@
+{
+    "name": "xtreemfs",
+    "version": "1.5.1",
+    "origin": "net/xtreemfs",
+    "comment": "XtreemFS, Distributed Fault-Tolerant File System",
+    "desc": "XtreemFS, Distributed Fault-Tolerant File System",
+    "maintainer": "root@linkage.white-void.net",
+    "www": "http://www.xtreemfs.org",
+    "prefix": "/usr/local",
+    "deps": {
+        "openjdk8": { "origin": "java/openjdk8" },
+        "boost-libs": { "origin": "devel/boost-libs" },
+        "fusefs-libs": { "origin": "sysutils/fusefs-libs" }
+     }
+}
