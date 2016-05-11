@@ -8,8 +8,12 @@
     "www": "http://www.xtreemfs.org",
     "prefix": "/usr/local",
     "deps": {
+        "bash": { "origin": "shells/bash" },
         "openjdk8": { "origin": "java/openjdk8" },
         "boost-libs": { "origin": "devel/boost-libs" },
         "fusefs-libs": { "origin": "sysutils/fusefs-libs" }
-     }
+    },
+    "scripts": {
+	"post-install": "/usr/local/etc/xos/xtreemfs/postinstall_setup.sh"
+    }
 }

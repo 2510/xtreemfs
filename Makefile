@@ -31,17 +31,18 @@ XTREEMFS_CLIENT_BUILD_DIR=$(shell pwd)/cpp/build
 XTREEMFS_BINARIES_DIR = $(shell pwd)/bin
 
 # Install paths relative to DESTDIR.
-XTREEMFS_JAR_DIR=$(DESTDIR)/usr/share/java
+DESTSHARE=$(or $(DESTDIR),/usr)/share
+XTREEMFS_JAR_DIR=$(DESTSHARE)/java
 XTREEMFS_CONFIG_PARENT_DIR=$(DESTDIR)/etc/xos
 XTREEMFS_CONFIG_DIR=$(XTREEMFS_CONFIG_PARENT_DIR)/xtreemfs
 XTREEMFS_RC_DIR=$(DESTDIR)/etc/rc.d
-XTREEMFS_SHARE_DIR=$(DESTDIR)/usr/share/xtreemfs
+XTREEMFS_SHARE_DIR=$(DESTSHARE)/xtreemfs
 BIN_DIR=$(DESTDIR)/usr/bin
 SBIN_DIR=$(DESTDIR)/sbin
-MAN_DIR=$(DESTDIR)/usr/share/man/man1
-DOC_DIR_SERVER=$(DESTDIR)/usr/share/doc/xtreemfs-server
-DOC_DIR_CLIENT=$(DESTDIR)/usr/share/doc/xtreemfs-client
-DOC_DIR_TOOLS=$(DESTDIR)/usr/share/doc/xtreemfs-tools
+MAN_DIR=$(DESTSHARE)/man/man1
+DOC_DIR_SERVER=$(DESTSHARE)/doc/xtreemfs-server
+DOC_DIR_CLIENT=$(DESTSHARE)/doc/xtreemfs-client
+DOC_DIR_TOOLS=$(DESTSHARE)/doc/xtreemfs-tools
 PLUGIN_CONFIG_DIR=$(XTREEMFS_CONFIG_DIR)/server-repl-plugin
 
 #Configuration of cpp code thirdparty dependencies.

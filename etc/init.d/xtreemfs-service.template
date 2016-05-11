@@ -28,7 +28,8 @@ CONFIG=/usr/local/etc/xos/xtreemfs/@SHORT_SERVICE_NAME_LOWERCASE@config.properti
 LOG=/var/log/xtreemfs/@SHORT_SERVICE_NAME_LOWERCASE@.log
 
 JAVA_HOME=/usr/local/openjdk8
-JAVA_CALL="$JAVA_HOME/bin/java -ea -cp /usr/share/java/XtreemFS.jar:/usr/share/java/BabuDB.jar:/usr/share/java/Flease.jar:/usr/share/java/protobuf-java-2.5.0.jar:/usr/share/java/Foundation.jar:/usr/share/java/jdmkrt.jar:/usr/share/java/jdmktk.jar:/usr/share/java/commons-codec-1.3.jar"
+JAVA_SHARE=/usr/local/share
+JAVA_CALL="$JAVA_HOME/bin/java -ea -cp ${JAVA_SHARE}/java/XtreemFS.jar:${JAVA_SHARE}/java/BabuDB.jar:${JAVA_SHARE}/java/Flease.jar:${JAVA_SHARE}/java/protobuf-java-2.5.0.jar:${JAVA_SHARE}/java/Foundation.jar:${JAVA_SHARE}/java/jdmkrt.jar:${JAVA_SHARE}/java/jdmktk.jar:${JAVA_SHARE}/java/commons-codec-1.3.jar"
 
 xtreemfs_precheck() {
     exists=`grep -c $XTREEMFS_USER /etc/passwd`
