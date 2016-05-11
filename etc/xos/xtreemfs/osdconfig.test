@@ -83,7 +83,7 @@ capability_secret = Yagga
 # loaded at runtime. Policies may have external dependencies that can be
 # deployed either as .java, .class or .jar files. While Java and Class files
 # may be located in subdirectories, JAR files mustn't.
-policy_dir = /etc/xos/xtreemfs/policies
+policy_dir = /usr/local/etc/xos/xtreemfs/policies
 
 # If you want to monitor your XtreemFS installation through SNMP 
 # uncomment the following lines. You have to set snmp.enabled = true

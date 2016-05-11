@@ -62,7 +62,7 @@ ssl.trusted_certs.container = jks
 # loaded at runtime. Policies may have external dependencies that can be
 # deployed either as .java, .class or .jar files. While Java and Class files
 # may be located in subdirectories, JAR files mustn't.
-policy_dir = /etc/xos/xtreemfs/policies
+policy_dir = /usr/local/etc/xos/xtreemfs/policies
 
 uuid = test-localhost-DIR 
 

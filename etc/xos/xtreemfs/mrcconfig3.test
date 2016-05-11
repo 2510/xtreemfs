@@ -83,7 +83,7 @@ authentication_provider = org.xtreemfs.common.auth.NullAuthProvider
 # Policies identified by policy IDs (OSDSelectionPolicy and FileAccessPolicy)
 # require a public static long field called POLICY_ID that assigns the policy
 # a unique number.
-policy_dir = /etc/xos/xtreemfs/policies
+policy_dir = /usr/local/etc/xos/xtreemfs/policies
 
 geographic_coordinates = 52.455483,13.297405
 
