@@ -65,7 +65,7 @@ xtreemfs_start() {
     echo -e "Starting XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@)...\n\n" >> $LOG
 
     echo -n "Starting XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@)..."
-    /usr/sbin/daemon -u $XTREEMFS_USER -P $PID sh -c "$JAVA_CALL org.xtreemfs.@SHORT_SERVICE_NAME_LOWERCASE@.@SHORT_SERVICE_NAME@ $CONFIG >> $LOG 2>&1"
+    /usr/sbin/daemon -u $XTREEMFS_USER -P $PID -f sh -c "$JAVA_CALL org.xtreemfs.@SHORT_SERVICE_NAME_LOWERCASE@.@SHORT_SERVICE_NAME@ $CONFIG >> $LOG 2>&1"
     sleep 1
 
     if [ -e /proc/$PROCPID ]; then
