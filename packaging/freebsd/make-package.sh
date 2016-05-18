@@ -18,7 +18,14 @@ export JAVA_HOME=/usr/local/openjdk8
 
 (
     cd ${BASEDIR}
-    gmake ANT_BIN=/usr/local/bin/ant PYTHON=python2.7 CC=cc CXX=c++ DESTDIR="${DESTDIR}" install
+    gmake ANT_BIN=/usr/local/bin/ant \
+	  PYTHON=python2.7 \
+	  CC=cc \
+	  CXX=c++ \
+	  DESTDIR="${DESTDIR}" \
+	  BIN_DIR="${DESTDIR}/bin" \
+	  SBIN_DIR="${DESTDIR}/sbin" \
+	  all install
 )
 
 /usr/local/bin/python2.7 "${OURDIR}/make-manifest.py" --root "${DESTROOT}" --uid root --gid wheel > "${MANIFEST}"
