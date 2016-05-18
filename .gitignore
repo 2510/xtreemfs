@@ -11,3 +11,6 @@
 .clang_complete
 cscope.out
 .vagrant
+/etc/init.d/xtreemfs-dir-e
+/etc/init.d/xtreemfs-mrc-e
+/etc/init.d/xtreemfs-osd-e
