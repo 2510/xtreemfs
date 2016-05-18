@@ -988,7 +988,7 @@ string GetPathOnVolume(const char* real_path_cstr) {
         " find out the path relative to the volume root.");
   }
 
-  const boost::regex mount_point_re("^/dev/fuse[0-9] on ([^ ]+) \\(fusefs");  // NOLINT
+  const boost::regex mount_point_re("^/dev/fuse[0-9]* on ([^ ]+) \\(fusefs");  // NOLINT
   bool entry_found = false;
   while (fgets(buf, sizeof(buf), in) != NULL) {
     string line(buf);
