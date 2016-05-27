@@ -4,13 +4,13 @@
 #
 # XtreemFS @LONG_SERVICE_NAME@ (@SHORT_SERVICE_NAME@). http://www.xtreemfs.org/
 
-# PROVIDE: xstreemfs-@SHORT_SERVICE_NAME_LOWERCASE@
+# PROVIDE: xtreemfs-@SHORT_SERVICE_NAME_LOWERCASE@
 # REQUIRE: NETWORKING cleanvar
 
 . /etc/rc.subr
 
-name="xstreemfs-@SHORT_SERVICE_NAME_LOWERCASE@"
-rcvar="xstreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable"
+name="xtreemfs-@SHORT_SERVICE_NAME_LOWERCASE@"
+rcvar="xtreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable"
 
 extra_commands="restart"
 start_precmd='xtreemfs_precheck'
@@ -20,7 +20,7 @@ restart_cmd="xtreemfs_restart"
 status_cmd="xtreemfs_status"
 required_modules="fuse"
 
-xstreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable=${xstreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable:-"NO"}
+xtreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable=${xtreemfs_@SHORT_SERVICE_NAME_LOWERCASE@_enable:-"NO"}
 
 XTREEMFS_USER=xtreemfs
 PID=/var/run/xtreemfs_@SHORT_SERVICE_NAME_LOWERCASE@.pid
