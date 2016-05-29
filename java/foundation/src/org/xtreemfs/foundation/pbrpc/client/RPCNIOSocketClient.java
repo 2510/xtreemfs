@@ -206,6 +206,7 @@ public class RPCNIOSocketClient extends LifeCycleThread {
     
     @Override
     public void run() {
+	double brokenSelectAverage = TIMEOUT_GRANULARITY;
 
         brokenSelect = false;
         // Doesn't work properly, should be a replaced with a better way to detect
@@ -245,7 +246,19 @@ public class RPCNIOSocketClient extends LifeCycleThread {
                 
                 int numKeys = 0;
                 try {
+		    long start = System.currentTimeMillis();
                     numKeys = selector.select(TIMEOUT_GRANULARITY);
+		    long end = System.currentTimeMillis();
+		    if (numKeys == 0) {
+			final double alpha = 0.95;
+			brokenSelectAverage = brokenSelectAverage * alpha + (end - start) * (1 - alpha);
+			if (brokenSelectAverage < TIMEOUT_GRANULARITY * 0.1) {
+			    if (!brokenSelect) {
+				Logging.logMessage(Logging.LEVEL_WARN, Category.net, this, "Broken-select detected.");
+				brokenSelect = true;
+			    }
+			}
+		    }
                 } catch (CancelledKeyException ex) {
                     Logging.logMessage(Logging.LEVEL_WARN, Category.net, this, "Exception while selecting: %s",
                         ex.toString());
